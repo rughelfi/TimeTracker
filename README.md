@@ -19,14 +19,17 @@ TimeTracker è un'applicazione desktop moderna e leggera per Windows, sviluppata
 
 ## 📦 Installazione
 
-Puoi installare TimeTracker tramite l'installer Windows autonomo:
-1. Genera o scarica `TimeTracker-Setup-v1.0.0.exe` dalla cartella `Installer/Output`.
-2. Esegui il file di installazione:
-   - Non richiede diritti di amministratore (può essere installato solo per l'utente corrente).
-   - Crea i collegamenti nel Menu Start e sul Desktop.
-   - Include il runtime .NET 8 (Self-Contained ReadyToRun).
+Puoi scaricare e installare TimeTracker in pochi secondi:
 
-Per maggiori informazioni o per personalizzare la compilazione dell'installer, consulta [Installer README](Installer/README.md).
+1. **Scarica l'installer ufficiale:**
+   - ⬇️ **[Download TimeTracker-Setup-v1.0.0.exe](https://github.com/rughelfi/TimeTracker/releases/latest/download/TimeTracker-Setup-v1.0.0.exe)** (disponibile nella sezione **[GitHub Releases](https://github.com/rughelfi/TimeTracker/releases)**).
+2. **Esegui l'installer:**
+   - **Nessun prerequisito:** Include già il runtime .NET 8 (Self-Contained & ReadyToRun per Windows a 64 bit).
+   - **Nessun diritto di amministratore richiesto:** Può essere installato sia per il singolo utente (`%LOCALAPPDATA%`) che per tutti gli utenti del sistema.
+   - Crea automaticamente i collegamenti nel Menu Start e (opzionalmente) sul Desktop con l'icona ufficiale.
+   - Opzione per configurare l'avvio automatico all'accesso a Windows.
+
+Per compilare autonomamente l'installer dal codice sorgente, consulta [Installer README](Installer/README.md).
 
 ---
 
