@@ -7,6 +7,7 @@
 
 #define MyAppName "TimeTracker"
 #define MyAppPublisher "TimeTracker"
+#define MyAppURL "https://github.com/rughelfi/TimeTracker"
 #define MyAppExeName "TimeTracker.exe"
 
 #ifndef SourceDir
@@ -24,6 +25,9 @@ AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 AppVerName={#MyAppName} {#MyAppVersion}
 AppPublisher={#MyAppPublisher}
+AppPublisherURL={#MyAppURL}
+AppSupportURL={#MyAppURL}
+AppUpdatesURL={#MyAppURL}
 DefaultDirName={autopf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
