@@ -1,0 +1,23 @@
+## Build and Publish outputs
+**/bin/
+**/obj/
+**/publish/
+**/temp_publish/
+Installer/Output/
+Installer/temp_publish/
+
+## Visual Studio / Rider / VSCode
+.vs/
+*.user
+*.suo
+.idea/
+.vscode/
+
+## SQLite & Local App Data
+*.db
+*.db-shm
+*.db-wal
+
+## Tool / Analysis outputs
+graphify-out/
+

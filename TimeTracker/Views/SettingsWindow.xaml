@@ -1,0 +1,196 @@
+<Window x:Class="TimeTracker.Views.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Impostazioni" Height="Auto" Width="440"
+        Icon="pack://application:,,,/Resources/app_icon.png"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        WindowStartupLocation="CenterOwner" SizeToContent="Height" ResizeMode="NoResize">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Border CornerRadius="12" Background="{StaticResource BgMid}"
+            BorderBrush="#22FFFFFF" BorderThickness="1">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="24" ShadowDepth="6" Opacity="0.5" Color="Black"/>
+        </Border.Effect>
+
+        <StackPanel>
+            <!-- Header -->
+            <Border CornerRadius="12,12,0,0" Background="{StaticResource BgDark}"
+                    MouseLeftButtonDown="Header_MouseLeftButtonDown" Cursor="SizeAll" Padding="16,12">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Image Source="pack://application:,,,/Resources/app_icon.png" Width="18" Height="18" Margin="0,0,8,0"/>
+                    <TextBlock Text="Impostazioni" Foreground="{StaticResource Accent}"
+                               FontFamily="Segoe UI" FontSize="15" FontWeight="SemiBold"/>
+                </StackPanel>
+            </Border>
+
+            <StackPanel Margin="20,16,20,20">
+
+                <!-- Interval -->
+                <TextBlock Text="INTERVALLO REMINDER (MINUTI)" Style="{StaticResource Label}"/>
+                <Grid Margin="0,0,0,16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Slider Grid.Column="0" Minimum="5" Maximum="120" TickFrequency="5"
+                            IsSnapToTickEnabled="True"
+                            Value="{Binding IntervalMinutes, Mode=TwoWay}"
+                            Foreground="{StaticResource Accent}" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="1" Text="{Binding IntervalMinutes, StringFormat='{}{0} min'}"
+                               Foreground="{StaticResource TextPrimary}" FontFamily="Segoe UI"
+                               FontSize="13" VerticalAlignment="Center" Margin="12,0,0,0" Width="50"/>
+                </Grid>
+
+                <!-- Work day start & end -->
+                <Grid Margin="0,0,0,16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="12"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="INIZIO GIORNATA" Style="{StaticResource Label}"/>
+                        <TextBox Style="{StaticResource DarkTextBox}"
+                                 Text="{Binding WorkDayStart, UpdateSourceTrigger=PropertyChanged}"
+                                 ToolTip="Formato HH:mm — es. 09:00"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="FINE GIORNATA" Style="{StaticResource Label}"/>
+                        <TextBox Style="{StaticResource DarkTextBox}"
+                                 Text="{Binding WorkDayEnd, UpdateSourceTrigger=PropertyChanged}"
+                                 ToolTip="Formato HH:mm — es. 18:00 (lascia vuoto per 24h)"/>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Sound -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                    <CheckBox IsChecked="{Binding PlaySound}" VerticalAlignment="Center"/>
+                    <TextBlock Text="Suona sveglia allo scadere del timer"
+                               Foreground="{StaticResource TextPrimary}" FontFamily="Segoe UI"
+                               FontSize="13" VerticalAlignment="Center" Margin="8,0,12,0"/>
+                    <Button Content="▶ Test" Style="{StaticResource GhostButton}"
+                            Padding="10,6" FontSize="11"
+                            Command="{Binding TestSoundCommand}"/>
+                </StackPanel>
+
+                <!-- Auto Start -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                    <CheckBox IsChecked="{Binding AutoStartWithWindows}" VerticalAlignment="Center"/>
+                    <TextBlock Text="Avvia automaticamente all'avvio di Windows"
+                               Foreground="{StaticResource TextPrimary}" FontFamily="Segoe UI"
+                               FontSize="13" VerticalAlignment="Center" Margin="8,0,0,0"/>
+                </StackPanel>
+
+                <!-- Default Remote -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                    <CheckBox IsChecked="{Binding DefaultIsRemote}" VerticalAlignment="Center"/>
+                    <TextBlock Text="Imposta 'Da remoto' come predefinito per le attività"
+                               Foreground="{StaticResource TextPrimary}" FontFamily="Segoe UI"
+                               FontSize="13" VerticalAlignment="Center" Margin="8,0,0,0"/>
+                </StackPanel>
+
+                <!-- Similarity threshold -->
+                <TextBlock Text="SOGLIA RAGGRUPPAMENTO ATTIVITÀ SIMILI" Style="{StaticResource Label}"/>
+                <Grid Margin="0,0,0,16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Slider Grid.Column="0" Minimum="0.1" Maximum="1.0" TickFrequency="0.05"
+                            IsSnapToTickEnabled="True"
+                            Value="{Binding SimilarityThreshold, Mode=TwoWay}"
+                            Foreground="{StaticResource Accent}" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="1"
+                               Text="{Binding SimilarityThreshold, StringFormat='{}{0:P0}'}"
+                               Foreground="{StaticResource TextPrimary}" FontFamily="Segoe UI"
+                               FontSize="13" VerticalAlignment="Center" Margin="12,0,0,0" Width="50"/>
+                </Grid>
+
+                <!-- Export path -->
+                <TextBlock Text="CARTELLA DI EXPORT" Style="{StaticResource Label}"/>
+                <Grid Margin="0,0,0,16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" Style="{StaticResource DarkTextBox}"
+                             Text="{Binding ExportPath}" Margin="0,0,6,0"/>
+                    <Button Grid.Column="1" Content="📁" Style="{StaticResource GhostButton}"
+                            Command="{Binding BrowseExportPathCommand}" Padding="10,8"/>
+                </Grid>
+
+                <!-- Projects -->
+                <TextBlock Text="PROGETTI" Style="{StaticResource Label}"/>
+                <Border Background="{StaticResource BgDark}" CornerRadius="8" Padding="10" Margin="0,0,0,8">
+                    <ItemsControl ItemsSource="{Binding Projects}" MaxHeight="130">
+                        <ItemsControl.Template>
+                            <ControlTemplate>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <ItemsPresenter/>
+                                </ScrollViewer>
+                            </ControlTemplate>
+                        </ItemsControl.Template>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{Binding}"
+                                               Foreground="{StaticResource TextPrimary}"
+                                               FontFamily="Segoe UI" FontSize="12"
+                                               VerticalAlignment="Center"/>
+                                    <Button Grid.Column="1" Content="✕" Padding="6,2"
+                                            Background="Transparent" BorderThickness="0"
+                                            Foreground="{StaticResource TextSecondary}"
+                                            Cursor="Hand" FontSize="11"
+                                            Command="{Binding DataContext.RemoveProjectCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                            CommandParameter="{Binding}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Border>
+                <Grid Margin="0,0,0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" Style="{StaticResource DarkTextBox}"
+                             Text="{Binding NewProject, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,0,6,0">
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Return" Command="{Binding AddProjectCommand}"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    <Button Grid.Column="1" Content="+ Aggiungi" Style="{StaticResource AccentButton}"
+                            Command="{Binding AddProjectCommand}"/>
+                </Grid>
+
+                <!-- Buttons -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="8"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Content="✓ Salva" Style="{StaticResource AccentButton}"
+                            Command="{Binding SaveCommand}" Padding="0,10"/>
+                    <Button Grid.Column="2" Content="Annulla" Style="{StaticResource GhostButton}"
+                            Command="{Binding CancelCommand}"/>
+                </Grid>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</Window>
